@@ -13,3 +13,12 @@ const rootReducer = combineReducers({
 
 export default rootReducer;
 
+// Redux Thunk:
+// halts the dispatch
+// performs async tasks - gets data from DB
+// resumes the dispatch
+
+// Redux Thunk stands between the component who dispatches an action and the reducer
+// before the action reaches the reducer, Redux Thunk performs async tasks on the action
+
+
