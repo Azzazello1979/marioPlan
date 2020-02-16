@@ -3,7 +3,7 @@
 // databases asynchronously and when the async tasks are done, continue dispatch
 
 export const createProject = (project) => {
-    return (dispatch, getState, { getFirebase, getFirestore }) => {
+    return (dispatch, getState) => {
         // make async call
         dispatch({ type: 'CREATE_PROJECT', project }) // project is short for project:project
     }
