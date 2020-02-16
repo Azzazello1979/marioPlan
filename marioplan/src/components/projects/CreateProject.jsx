@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { connect } from 'react-redux';
+import { createProject } from './../../store/actions/projectActions';
 
 export class CreateProject extends Component {
   state = {
@@ -15,7 +17,8 @@ export class CreateProject extends Component {
 
   handleSubmit = e => {
       e.preventDefault();
-      console.log(this.state);
+      //console.log(this.state);
+      this.props.createProject(this.state);
   }
 
   render() {
@@ -42,4 +45,14 @@ export class CreateProject extends Component {
   }
 }
 
-export default CreateProject;
+// the dispatch method is injected to the props of the component
+// map-dispatch-to-props
+const dispatchInjector = dispatch => {
+  return {
+    createProject: (project) => dispatch(createProject(project))
+  }
+} 
+
+export default connect(null, dispatchInjector)(CreateProject);
+// connect functions's 1st arg is 'stateInjector', second arg is 'dispatchInjector'
+
