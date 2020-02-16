@@ -2,7 +2,7 @@ import firebase from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/auth';
 
-var firebaseConfig = {
+var fireBaseConfig = {
     apiKey: "AIzaSyBm1kaCQFrvVOxS8MqAm6cIfnWqoupU0Hk",
     authDomain: "marioplan-678df.firebaseapp.com",
     databaseURL: "https://marioplan-678df.firebaseio.com",
@@ -13,7 +13,7 @@ var firebaseConfig = {
     measurementId: "G-9SSX4MVSYL"
   };
   // Initialize Firebase
-  firebase.initializeApp(firebaseConfig);
+  firebase.initializeApp(fireBaseConfig);
   firebase.analytics();
   firebase.firestore().settings({ timestampsInSnapshots: true });
 
