@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import Notifications from './Notifications';
 import ProjectList from './../projects/ProjectList';
 import { connect } from 'react-redux';
+import { firestoreConnect } from 'react-redux-firebase';
+import { compose } from 'redux';
 
 
 class Dashboard extends Component{
@@ -26,13 +28,20 @@ class Dashboard extends Component{
 const stateInjector = state => {
     // the state arg above is the state of the store
     // map-state-to-props
-    // console.log('stateInjector functions arg:state ', state)
+    console.log('stateInjector functions arg:state ', state)
     return {
-        projects: state.project.projects
+        projects: state.firestore.ordered.projects
     }
 }
 
-export default connect(stateInjector)(Dashboard);
+
+// to compose multiple higher order functions together, use compose() of redux
+export default compose(
+    connect(stateInjector),
+    firestoreConnect([
+        { collection: 'projects' }
+    ])
+)(Dashboard);
 // The connect function of react-redux connects a react component 
 // with the redux store.
 // As args it takes a function that 'maps the state to props' as

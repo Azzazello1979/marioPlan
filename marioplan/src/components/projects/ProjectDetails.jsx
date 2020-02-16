@@ -1,26 +1,54 @@
 import React from "react";
+import { connect } from 'react-redux';
+import { firestoreConnect } from 'react-redux-firebase';
+import { compose } from 'redux';
+import './ProjectDetails.css';
+
 
 const ProjectDetails = props => {
-  const id = props.match.params.id;
-  return (
-    <div className="container section project-details">
+
+  const { project } = props;
+  if (project){
+    return(
+      <div className="container section project-details">
       <div className="card z-depth-0">
         <div className="card-content">
-          <span className="card-title">Project Title - {id}</span>
-          <p>
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Molestias
-            nostrum voluptas cum perspiciatis atque corporis, voluptatem
-            doloribus similique saepe harum dolorum. Veritatis beatae
-            voluptatibus cum corporis harum sint illum aspernatur!
-          </p>
+        <span className="card-title">{ project.title }</span>
+          <p>{ project.content }</p>
         </div>
         <div className="card-action grey lighten-4 grey-text">
-          <div>Posted by Bruc</div>
+          <div>Posted by { project.authorFirstName } { project.authorLastName }</div>
           <div>2nd September, 2AM</div>
         </div>
       </div>
     </div>
-  );
+    )
+  } else {
+    return (
+    <div className="container center">
+      <h3 className="whiteText">Loading project...</h3>
+    </div>
+      )
+  }
+
+  
 };
 
-export default ProjectDetails;
+// or 'map-state-to-props'
+const stateInjector = (storeState, thisComponentProps) => {
+  //console.log('<ProjectDetails /> storeState: ', storeState)
+  //console.log('<ProjectDetails /> thisComponentProps: ', thisComponentProps)
+  const id = thisComponentProps.match.params.id;
+  const projects = storeState.firestore.data.projects;
+  const project = projects ? projects[id] : null;
+  return {
+    project: project
+  }
+}
+
+export default compose(
+  connect(stateInjector),
+  firestoreConnect([
+    { collection: 'projects' }
+  ])
+)(ProjectDetails);
