@@ -21,4 +21,5 @@ export default rootReducer;
 // Redux Thunk stands between the component who dispatches an action and the reducer
 // before the action reaches the reducer, Redux Thunk performs async tasks on the action
 
+// dispatch action ---> Redux Thunk (middleware) ---> Reducer
 
