@@ -2,6 +2,7 @@ import authReducer from './authReducer';
 import projectReducer from './projectReducer';
 import { combineReducers } from 'redux';
 import { firestoreReducer } from 'redux-firestore';
+import { firebaseReducer } from 'react-redux-firebase';
 
 // this is the 'boss robot'(rootReducer) in front of the 
 // warehouse(store), 
@@ -10,7 +11,8 @@ import { firestoreReducer } from 'redux-firestore';
 const rootReducer = combineReducers({
     auth: authReducer,
     project: projectReducer,
-    firestore: firestoreReducer
+    firestore: firestoreReducer, // sync the firestore DB with the redux state
+    firebase: firebaseReducer // sync the auth status of firebase with the redux state
 });
 
 export default rootReducer;
