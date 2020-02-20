@@ -17,14 +17,21 @@ const store = createStore(
     compose(
         applyMiddleware(thunk.withExtraArgument({ getFirebase, getFirestore })),
         reduxFirestore(fireBaseConfig),
-        reactReduxFirebase(fireBaseConfig)
+        reactReduxFirebase(fireBaseConfig, { attachAuthIsReady: true })
     ) 
 );
+
+store.firebaseAuthIsReady
+.then(() => {
+    ReactDOM.render(<Provider store={store}><App /></Provider>, document.getElementById('root'))
+})
+.catch(err => console.log(err))
+
 // thunk:
 // you can return a function inside the action creators that can
 // halt the dispatch and interact with databases, then continue dispatch
 
-ReactDOM.render(<Provider store={store}><App /></Provider>, document.getElementById('root'));
+
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
