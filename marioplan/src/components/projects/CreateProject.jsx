@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux';
 import { createProject } from './../../store/actions/projectActions';
+import { Redirect } from 'react-router-dom';
 
 export class CreateProject extends Component {
   state = {
@@ -22,6 +23,10 @@ export class CreateProject extends Component {
   }
 
   render() {
+    const { auth } = this.props;
+    if(!auth.uid){
+      return <Redirect to='/signin' />
+    }
     return (
       <div className="container">
         <form onSubmit={ this.handleSubmit } className="white">
@@ -45,6 +50,12 @@ export class CreateProject extends Component {
   }
 }
 
+const stateInjector = state => {
+  return {
+    auth: state.firebase.auth
+  }
+}
+
 // the dispatch method is injected to the props of the component
 // map-dispatch-to-props
 const dispatchInjector = dispatch => {
@@ -53,6 +64,6 @@ const dispatchInjector = dispatch => {
   }
 } 
 
-export default connect(null, dispatchInjector)(CreateProject);
+export default connect(stateInjector, dispatchInjector)(CreateProject);
 // connect functions's 1st arg is 'stateInjector', second arg is 'dispatchInjector'
 
