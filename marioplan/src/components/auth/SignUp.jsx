@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
+import { signUp } from './../../store/actions/authActions';
 
 export class SignUp extends Component {
   state = {
@@ -20,6 +21,7 @@ export class SignUp extends Component {
   handleSubmit = e => {
     e.preventDefault();
     //console.log(this.state);
+    this.props.signUp(this.state);
     this.setState({
       email: "",
       password: "",
@@ -70,4 +72,10 @@ const stateInjector = state => {
   }
 }
 
-export default connect(stateInjector,null)(SignUp);
+const dispatchInjector = dispatch => {
+  return{
+    signUp: usrObj => dispatch(signUp(usrObj))
+  }
+}
+
+export default connect(stateInjector, dispatchInjector)(SignUp);

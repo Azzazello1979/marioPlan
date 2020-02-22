@@ -28,3 +28,31 @@ export const signOut = () => {
         )
     }
 }
+
+export const signUp = userObj => {
+    return ( dispatch, getState, { getFirebase, getFirestore } ) => {
+        const firebase = getFirebase();
+        const firestore = getFirestore();
+        firebase.auth().createUserWithEmailAndPassword(
+            userObj.email,
+            userObj.password
+        )
+        .then((resp) => {
+            return firestore.collection('users').doc(resp.user.uid).set({
+                firstName: userObj.firstName,
+                lastName: userObj.lastName,
+                initials: userObj.firstName[0] + userObj.lastName[0]
+            })
+        })
+        .then(() => {
+            dispatch({
+                type: 'SIGNUP_SUCCESS'
+            })
+        })
+        .catch(err => {
+            dispatch({
+                type: 'SIGNUP_ERROR', err
+            })
+        })
+    }
+}
