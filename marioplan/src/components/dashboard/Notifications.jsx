@@ -43,7 +43,6 @@ export default
 compose(
     connect(stateInjector, null),
     firestoreConnect([
-        { collection: 'notifications', limit: 3 }
+        { collection: 'notifications', limit: 6, orderBy: ['time', 'desc'] }
     ])
-)
-(Notifications)
+)(Notifications)

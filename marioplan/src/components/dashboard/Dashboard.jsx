@@ -44,7 +44,7 @@ const stateInjector = state => {
 export default compose(
     connect(stateInjector),
     firestoreConnect([
-        { collection: 'projects' }
+        { collection: 'projects', orderBy: ['createdAt', 'desc'] }
     ])
 )(Dashboard);
 // The connect function of react-redux connects a react component 
